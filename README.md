@@ -42,4 +42,5 @@ You can get API ID and API hash from (here)[https://core.telegram.org/api/obtain
 
 ## To-do
 [] Make it work for different groups by authenticating users
+
 [] Make it work in chat
