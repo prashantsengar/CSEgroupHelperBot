@@ -35,12 +35,12 @@ It works only in the given Telegram group.
 
   - group: ID of the Telegram group in which you want it to work
 
-You can get API ID and API hash from (here)[https://core.telegram.org/api/obtaining_api_id]
+You can get API ID and API hash from [here](https://core.telegram.org/api/obtaining_api_id)
 
 - Add the bot to the group
 - Use /get command in the group
 
 ## To-do
-[] Make it work for different groups by authenticating users
+- [ ] Make it work for different groups by authenticating users
 
-[] Make it work in chat
+- [ ] Make it work in chat
