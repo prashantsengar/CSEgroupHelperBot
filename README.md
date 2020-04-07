@@ -6,26 +6,34 @@ It works only in the given Telegram group.
 
 ## Running on your local machine
 - Clone the repo on your local machine 
+
 `git clone https://github.com/prashantsengar/CSEgroupHelperBot.git`
 
 - Change your current working directory 
+
 `cd CSEgroupHelperBot`
 
 - Activate your Google classroom API (of the account which has access to the classroom) and download the JSON credential file and name it as 'credentials.json'
 
 - Run classr.py 
+
 `python3 classr.py`
 
 - Activate your Google drive API (of the account which has access to the classroom) and download the JSON credential file and name it as 'drive.json'
 
 - Run download.py 
+
 `python3 download.py`
 
 - Change the values of ENV variables 
--- tok: Telegram bot token
--- id: Your Telegram API ID
--- hash: Your Telegram API Hash
--- group: ID of the Telegram group in which you want it to work
+
+  - tok: Telegram bot token
+
+  - id: Your Telegram API ID
+
+  - hash: Your Telegram API Hash
+
+  - group: ID of the Telegram group in which you want it to work
 
 You can get API ID and API hash from (here)[https://core.telegram.org/api/obtaining_api_id]
 
@@ -33,5 +41,5 @@ You can get API ID and API hash from (here)[https://core.telegram.org/api/obtain
 - Use /get command in the group
 
 ## To-do
-[ ] Make it work for different groups by authenticating users
-[ ] Make it work in chat
+[] Make it work for different groups by authenticating users
+[] Make it work in chat
