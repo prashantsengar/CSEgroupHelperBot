@@ -5,36 +5,35 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import download
 
-NLP = '56103600610'
+NLP = "56103600610"
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly', 'https://www.googleapis.com/auth/classroom.announcements' ]
-##          'https://www.googleapis.com/auth/classroom.announcements',
-##          'https://www.googleapis.com/auth/classroom.coursework.students.readonly'
+SCOPES = [
+    "https://www.googleapis.com/auth/classroom.courses.readonly",
+    "https://www.googleapis.com/auth/classroom.announcements",
+]
 
 def init():
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists("token.pickle"):
+        with open("token.pickle", "rb") as token:
             creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
+        with open("token.pickle", "wb") as token:
             pickle.dump(creds, token)
 
-    service = build('classroom', 'v1', credentials=creds, cache_discovery=False)
+    service = build("classroom", "v1", credentials=creds, cache_discovery=False)
 
-    ## returns service
     return service
 
 
@@ -43,39 +42,42 @@ def main():
     Prints the names of the first 10 courses the user has access to.
     """
     service = init()
-    
+
     # Call the Classroom API
     results = service.courses().list(pageSize=10).execute()
-    courses = results.get('courses', [])
+    courses = results.get("courses", [])
 
     if not courses:
-        print('No courses found.')
+        print("No courses found.")
     else:
-        print('Courses:')
+        print("Courses:")
         print(courses)
         for course in courses:
-            print(course['name'])
+            print(course["name"])
 
 
 def get_announcements(course_id):
     service = main()
-    
+
     topics = []
     page_token = None
     while True:
-        response = service.courses().announcements().list(
-            pageToken=page_token,
-            pageSize=30,
-            courseId=course_id).execute()
-        topics.extend(response.get('announcements', []))
-        page_token = response.get('nextPageToken', None)
+        response = (
+            service.courses()
+            .announcements()
+            .list(pageToken=page_token, pageSize=30, courseId=course_id)
+            .execute()
+        )
+        topics.extend(response.get("announcements", []))
+        page_token = response.get("nextPageToken", None)
         if not page_token:
             break
     if not topics:
-        print('No announcement found.')
+        print("No announcement found.")
     else:
         return topics
-        
+
+
 ##        files = []
 ##        texts = []
 ##        print('Announcements:')
@@ -97,9 +99,9 @@ def get_announcements(course_id):
 ##                    return texts, files
 ##                except KeyError:
 ##                    print('Key not found')
-##                
-##            
+##
+##
 ##        return texts, files
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
