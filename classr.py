@@ -12,10 +12,7 @@ SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly', 'https:/
 ##          'https://www.googleapis.com/auth/classroom.announcements',
 ##          'https://www.googleapis.com/auth/classroom.coursework.students.readonly'
 
-def main():
-    """Shows basic usage of the Classroom API.
-    Prints the names of the first 10 courses the user has access to.
-    """
+def init():
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -40,6 +37,13 @@ def main():
     ## returns service
     return service
 
+
+def main():
+    """Shows basic usage of the Classroom API.
+    Prints the names of the first 10 courses the user has access to.
+    """
+    service = init()
+    
     # Call the Classroom API
     results = service.courses().list(pageSize=10).execute()
     courses = results.get('courses', [])
@@ -72,30 +76,30 @@ def get_announcements(course_id):
     else:
         return topics
         
-        files = []
-        texts = []
-        print('Announcements:')
-        c=0
-        for topic in topics:
-            if c==0:
-                print(topic)
-                c=1
-            print('{0}'.format(topic['text']))
-            print(topic['materials'])
-            print('\n\n-----\n\n')
-            text = topic['text']
-            for i in topic['materials']:
-                try:
-                    file = download.get_file(i['driveFile']['driveFile']['id'])
-                    file.name = i['driveFile']['driveFile']['title']
-                    files.append(file)
-                    texts.append(text)
-                    return texts, files
-                except KeyError:
-                    print('Key not found')
-                
-            
-        return texts, files
+##        files = []
+##        texts = []
+##        print('Announcements:')
+##        c=0
+##        for topic in topics:
+##            if c==0:
+##                print(topic)
+##                c=1
+##            print('{0}'.format(topic['text']))
+##            print(topic['materials'])
+##            print('\n\n-----\n\n')
+##            text = topic['text']
+##            for i in topic['materials']:
+##                try:
+##                    file = download.get_file(i['driveFile']['driveFile']['id'])
+##                    file.name = i['driveFile']['driveFile']['title']
+##                    files.append(file)
+##                    texts.append(text)
+##                    return texts, files
+##                except KeyError:
+##                    print('Key not found')
+##                
+##            
+##        return texts, files
 
 if __name__ == '__main__':
     main()

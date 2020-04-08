@@ -34,19 +34,19 @@ async def help_handler(event):
         print(f'Getting for {CID}')
         if not CID in shelf:
             print(f'{CID} not in shelf')
-            shelf[CID]='0'
+            shelf[CID]=set()
             shelf.close()
             shelf = shelve.open('classes')
     
         ans = classr.get_announcements(CID)
 
         for ann in ans[::-1]:
-            if int(ann['id'])<=int(shelf[CID]):
+            if ann['id']) in shelf[CID]:
                 print('Already posted')
                 continue
             else:
                 print(f'Saving {ann["id"]} in shelf')
-                shelf[CID]=ann['id']
+                shelf[CID].add(ann['id'])
                 shelf.close()
                 shelf = shelve.open('classes')
             

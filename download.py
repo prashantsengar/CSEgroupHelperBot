@@ -9,10 +9,7 @@ from googleapiclient.http import MediaIoBaseDownload
 # If modifying these scopes, delete the file drive.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly', 'https://www.googleapis.com/auth/drive']
 
-def main():
-    """Shows basic usage of the Drive v3 API.
-    Prints the names and ids of the first 10 files the user has access to.
-    """
+def init():
     creds = None
     # The file drive.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -37,6 +34,13 @@ def main():
     ##returns service
     return service
 
+
+def main():
+    """Shows basic usage of the Drive v3 API.
+    Prints the names and ids of the first 10 files the user has access to.
+    """
+    service = init()
+    
     # Call the Drive v3 API
     results = service.files().list(
         pageSize=10, fields="nextPageToken, files(id, name)").execute()
@@ -50,7 +54,7 @@ def main():
             print(u'{0} ({1})'.format(item['name'], item['id']))
 
 def get_file(file_id):
-    service = main()
+    service = init()
 ##    file_id = '1_21b2D1sdtD84qaW73LwJ-5G_Sf7D0R5'
     
     request = service.files().get_media(fileId=file_id)
